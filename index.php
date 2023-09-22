@@ -181,7 +181,6 @@
 </footer>
 
 </html>
-=======
 <?php
 include_once('conexao/conexao.php');
 include_once('classe/classe.php');
@@ -241,4 +240,3 @@ if (isset($_POST['cadastrar'])) {
 <a href="login.php">Voltar para Tela de login</a>
 
 </html>
->>>>>>> 3b3f4d6a432a83226ce2bb90218fbf8d0097711e
