@@ -1,0 +1,218 @@
+/* Estilo para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    min-height: 100vh; /* Garante que a página ocupe pelo menos a altura da viewport */
+}
+
+/* Estilo para o formulário */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin-top: 20px;
+}
+
+/* Estilo para rótulos e campos de entrada */
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Estilo para botões de envio */
+button[type="submit"] {
+    background-color: #0c0833f1;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para links */
+a {
+    text-decoration: none;
+    color: #007bff;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Altera a direção do fluxo para uma coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+}
+
+header form {
+    margin-bottom: 20px;
+}
+
+header form input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+header form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Estilo para o menu de navegação */
+#menu {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#menu a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* Estilo para o conteúdo das ofertas */
+.container1 {
+    background-color: #0ca778;
+    display: flex;
+    flex-direction: column; /* Altera a direção do fluxo para uma coluna */
+    align-items: center;
+    padding: 20px;
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.container1 h2 {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+.container1 a {
+    text-decoration: none;
+}
+
+/* Estilo para as imagens dentro do container */
+.container1 img {
+    max-width: 100%;
+    margin: 10px 0; /* Adiciona margem somente na parte superior e inferior das imagens */
+}
+
+.container1 p {
+    margin: 10px 0;
+}
+
+.container1 details {
+    margin-top: 10px;
+}
+
+.container1 summary {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* Estilo para o rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* Estilo para a logo */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 40px;
+    margin-right: 10px;
+}
+
+/* Estilo para os ícones do cabeçalho (carrinho e CEP) */
+.header-icons {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.carrinho {
+    margin-left: auto; /* Mova o carrinho para o lado direito */
+}
+
+/* Estilo para o botão CEP e diálogo */
+#show {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: auto; /* Mova o botão CEP para o lado direito */
+}
+
+#Dialog {
+    width: 34%;
+}
+
+#hide {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}

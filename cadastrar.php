@@ -47,7 +47,7 @@ if (isset($_POST['cadastrar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <!-- Vincule o arquivo CSS para estilizar a página -->
-    <link rel="stylesheet" type="text/css" href="designer.css">
+    <link rel="stylesheet" type="text/css" href="designe.css">
 </head>
 
 <body>
