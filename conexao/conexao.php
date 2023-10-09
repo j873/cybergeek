@@ -20,4 +20,3 @@ class Conection{
         return $this->conn;
     }
 }
-?>

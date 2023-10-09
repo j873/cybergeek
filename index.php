@@ -1,183 +1,172 @@
+<?php
+session_start();
+
+require_once('classe/classe.php');
+require_once('conexao/conexao.php');
+require_once('classe/carrinho.php');
+
+$database = new Conection();
+$db = $database->getConnection();
+$classUsuario = new Cliente($db);
+
+$produtos = [];
+
+$query = "SELECT * FROM produto_compras ";
+$result = $db->query($query);
+
+if ($result->rowCount() > 0) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $produtos[] = $row;
+    }
+}
+
+$id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt_BR">
 
 <head>
     <meta charset="UTF-8">
-    <script src="https://kit.fontawesome.com/6dda5f6271.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="designe.css">
-    <title>Document</title>
-    <script type="text/javascript">
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value = ("");
-            document.getElementById('bairro').value = ("");
-            document.getElementById('cidade').value = ("");
-            document.getElementById('uf').value = ("");
+    <title>Login</title>
 
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/1a56e06420.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value = (conteudo.logradouro);
-                document.getElementById('bairro').value = (conteudo.bairro);
-                document.getElementById('cidade').value = (conteudo.localidade);
-                document.getElementById('uf').value = (conteudo.uf);
-
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep();
-                alert("CEP não encontrado.");
-            }
-        }
-
-        function pesquisacep(valor) {
-
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
-
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value = "...";
-                    document.getElementById('bairro').value = "...";
-                    document.getElementById('cidade').value = "...";
-                    document.getElementById('uf').value = "...";
-
-
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-
-                    //Sincroniza com o callback.
-                    script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
-
-                } //end if.
-                else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        };
-    </script>
     <style>
-        dialog {
-            width: 34%;
+        .product-card {
+            width: 100%;
+            min-width: 300px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            flex: 1;
+        }
+
+        .product-card .card-body {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .product-card h2 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .product-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .favorite-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .favorite-button {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            padding: 0;
+        }
+        .add-to-cart-button {
+            margin-top: 10px;
+
+        }
+
+        .btn_visu {
+            margin-bottom: 20px;
+
         }
     </style>
-    <div>
-        <dialog id="Dialog">
-            <p>
-                <label>Cep:
-                    <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" />
-                </label><br />
-                <label>Rua:
-                    <input name="rua" type="text" id="rua" size="60" /></label><br />
-                <label>Bairro:
-                    <input name="bairro" type="text" id="bairro" size="40" /></label><br />
-                <label>Cidade:
-                    <input name="cidade" type="text" id="cidade" size="40" /></label><br />
-                <label>Estado:
-                    <input name="uf" type="text" id="uf" size="2" /></label><br />
-            </p>
-            <button id="hide">Voltar</button>
-
-        </dialog>
-        <button id="show">CEP</button>
-    </div>
-    <script type="text/JavaScript">
-        (function() { var dialog = document.getElementById('Dialog'); document.getElementById('show').onclick = function() { dialog.show(); }; document.getElementById('hide').onclick = function() { dialog.close(); }; })();
-    </script>
 </head>
-
 <body>
-    <header>
-        <header>
-            <form action="#" method="post">
-                <input type="text" name="search" id="search">
-                <button type="submit"><i>Pesquisa</i></button>
-            </form>
-            <div class="container" id="menu">
-                <div class="logo"><img src="img/WhatsApp Image 2023-08-30 at 20.40 1.svg"></div>
-                <div class="carrinho"><img src="img/icons8-carrinho-de-compras-64.png" alt="Carinhho"></div>
-                <div class="menu">
-                    <nav>
-                        <a href="#categoria">Categorias</a>
-                        <a href="#ofertas">Ofertas</a>
-                        <a href="#historico">Historico</a>
-                        <a href="#contato">Contato</a>
-                        <a href="login.php">Logar</a>
-                        <a href="cadastrar.php">Crie sua Conta </a>
-                        <a href="#compras">Compras</a>
-                    </nav>
+    <?php include_once('view/header_main.php'); ?>
+
+    <div class="container">
+        <div class="row">
+            <?php foreach ($produtos as $produto => $value) : ?>
+                <div class="col-md-3 product-card">
+                    <div class="card position-relative">
+                        <span class="favorite-icon"><a href="?id_produto=<?= $produto ?>"><button type="button" class="btn btn-outline-danger favorite-button"><i class="fas fa-heart"></i></button></a></span>
+                        <img src="<?= $value["img_produto"] ?>" alt="<?= $value["nome_produto"] ?>" class="card-img-top">
+                        <div class="card-body">
+                            <h2 class="card-title"><?= $value["nome_produto"] ?></h2>
+                            <p class="card-text"><?= $value["descri"] ?></p>
+                            <p class="produto-preco">Preço: R$ <?php echo number_format($value['preco_produto'], 2, ',', '.'); ?></p>
+                            <input type="hidden" name="produto_id" value="<?= $value["id_produto"] ?>">
+                            <a href="visualizar_produto.php?id_produto=<?= $value["id_produto"] ?>" class="btn_visu btn btn-primary">Visualizar Produto</a>
+                        </div>
+                    </div>
                 </div>
-        </header>
-        <section id="ofertas">
-            <div class="container1">
-                <h2>Moletom unissex Akastuki Naruto</h2>
-                <a href=""><img src="img/images.png" alt="moletom_naruto"></a>
-                <p>De 149,90 por 49,90</p>
-                <details>
-                    <summary>Descrição</summary>
-                    <p>Tem no tamanho PP, P, M, G, GG e XGG</p>
-                </details>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+    if (isset($produtos[$id_produto])) {
+        $carrinho = new carrinho($id_produto, $produtos[$id_produto]['nome_produto'], $produtos[$id_produto]['descri'], $produtos[$id_produto]['preco_produto'], $produtos[$id_produto]['img_produto']);
+    } else {
+        echo "O produto com o id: $id_produto não existe.";
+    }
+    if (isset($_SESSION['carrinho'])) {
+        foreach ($_SESSION['carrinho'] as $produto => $value) {
+            if (isset($value['id_produto'], $value['nome_produto'], $value['descri'], $value['preco_produto'], $value['img_produto'])) {
+                echo "<p> Id do produto: " . $value['id_produto'] . " | 
+                                Nome do Produto: " . $value['nome_produto'] . " | 
+                                Descrição: " . $value['descri'] . " |
+                                Preço: " . $value['preco_produto'] . "| 
+                                Foto do Produto: " . $value['img_produto'] .
+                    "</p><br>";
+                echo "<a href='javascript:void(0);' class='excluir-produto' data-id='{$produto}'>Excluir</a>";
+            } else {
+                echo "Algumas chaves não existem para o produto: $produto";
+            }
+        }
+    } else {
+        echo "Carrinho de compras está vazio.";
+    }
+    ?>
 
-                <h2>Funko Pop do Harry potter</h2>
-                <a href=""><img src="img/funko.pop_luna.jpg" alt="funko_luna"></a>
-                <p>De 180,90 por 100,00</p>
-                <details>
-                    <summary>Descrição</summary>
-                    <p>Funko Pop da Personagem Luna de Harry potter</p>
-                </details>
+    <script>
+        $(document).ready(function() {
+            $(".excluir-produto").click(function() {
+                var idProduto = $(this).data("id");
 
-                <h2>Caneca do Naruto</h2>
-                <a href=""><img src="img/presentes-animes-4.webp" alt="Caneca_naruto"></a>
-                <p>De 70,90 por 49,90</p>
-                <details>
-                    <summary>Descrição</summary>
-                    <p>Caneca do Naruto e do Sasuke</p>
-                </details>
-                
-                <h2>Luminaria Do Dragon Ball</h2>
-                <a href=""><img src="img/luminari_dragonball.webp" alt="Luminaria"></a>
-                <p>De 379,90 por 249,90</p>
-                <details>
-                    <summary>Descrição</summary>
-                    <p>Luminaria Do Shen-long</p>
-                </details>
-            </div>
-        </section>
-
-        </main>
+                $.ajax({
+                    url: "excluir_produto.php", // Onde "excluir_produto.php" é o script PHP para processar a exclusão
+                    type: "POST",
+                    data: {
+                        id_produto: idProduto
+                    },
+                    success: function(response) {
+                        // Atualize a exibição do carrinho após a exclusão bem-sucedida
+                        // Você pode recarregar a página ou atualizar a lista de produtos do carrinho via AJAX
+                        location.reload(); // Recarrega a página (isso é apenas um exemplo)
+                    },
+                    error: function(xhr, status, error) {
+                        // Lida com erros de solicitação AJAX, se necessário
+                        console.error(error);
+                    },
+                });
+            });
+        });
+    </script>
 
 </body>
-<footer id="contato">
-    <a href="#menu">Voltar para Cima</a>
-    <p>Entre em Contato:</p>
-    <a href="">
-        <p><button><i class="fa-brands fa-whatsapp"></i></button>(41)989026701</p>
-    </a>
-    <a href="">
-        <p>E-mai:jd9730541@gmail.com</p>
-    </a>
 
-    </div>
-</footer>
+</html>
 
 </html>

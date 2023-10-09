@@ -9,8 +9,10 @@ header {
 }
 
 header form {
-    display: flex; /* Adicione esta linha para usar flexbox */
-    align-items: center; /* Centralize verticalmente os elementos do formulário */
+    display: flex;
+    /* Adicione esta linha para usar flexbox */
+    align-items: center;
+    /* Centralize verticalmente os elementos do formulário */
 }
 
 header form input[type="text"] {
@@ -26,7 +28,8 @@ header form button {
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    margin-left: 10px; /* Adicione margem à esquerda do botão para separá-lo do campo de texto */
+    margin-left: 10px;
+    /* Adicione margem à esquerda do botão para separá-lo do campo de texto */
 }
 
 /* Estilo para o menu de navegação */
@@ -46,7 +49,8 @@ header form button {
 .container1 {
     background-color: #0ca778;
     display: flex;
-    flex-direction: column; /* Altera a direção do fluxo para uma coluna */
+    flex-direction: column;
+    /* Altera a direção do fluxo para uma coluna */
     align-items: center;
     padding: 20px;
     max-width: 100%;
@@ -68,7 +72,8 @@ header form button {
 /* Estilo para as imagens dentro do container */
 .container1 img {
     max-width: 100%;
-    margin: 10px 0; /* Adiciona margem somente na parte superior e inferior das imagens */
+    margin: 10px 0;
+    /* Adiciona margem somente na parte superior e inferior das imagens */
 }
 
 .container1 p {
@@ -118,7 +123,8 @@ footer a {
 }
 
 .carrinho {
-    margin-left: auto; /* Mova o carrinho para o lado direito */
+    margin-left: auto;
+    /* Mova o carrinho para o lado direito */
 }
 
 /* Estilo para o botão CEP e diálogo */
@@ -129,7 +135,8 @@ footer a {
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    margin-left: auto; /* Mova o botão CEP para o lado direito */
+    margin-left: auto;
+    /* Mova o botão CEP para o lado direito */
 }
 
 #Dialog {

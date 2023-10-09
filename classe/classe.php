@@ -12,50 +12,40 @@ class Cliente
         $this->conn = $db;
     }
 
-    public function cadastrar($nome, $apelido, $email, $telefone, $senha, $confsenha)
+    public function cadastrar($nome, $email, $senha,$confSenha)
     {
-        if ($senha === $confsenha) {
-            $emailExistente = $this->verificarEmailExistente($email);
-            $nomeExistente = $this->verificarNomeexistente($nome);
-            if ($emailExistente || $nomeExistente) {
-                print "<script> alert('Email e Nome já cadastrado')</script>";
+
+        if ($senha === $confSenha) {
+
+            $verificarExistente = $this->verificarExistente($nome, $email);
+            if ($verificarExistente) {
+                print "<script>alert('Email ou Nome de usuario ja cadastrado!')</script>";
                 return false;
             }
 
-            $SenhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO cliente (nome,apelido, email,telefone, senha) VALUES (? ,? ,? ,?,?)";
+            $senhaCrip = password_hash($senha, PASSWORD_DEFAULT);
 
-            $stmt = $this->conn->prepare($sql);
+            $query = "INSERT  cliente (nome,email,senha) VALUES (?,?,?)";
+
+            $stmt = $this->conn->prepare($query);
             $stmt->bindValue(1, $nome);
-            $stmt->bindValue(2, $apelido);
-            $stmt->bindValue(3, $email);
-            $stmt->bindValue(4, $telefone);
-            $stmt->bindValue(5, $SenhaCriptografada);
-
+            $stmt->bindValue(2, $email);
+            $stmt->bindValue(3, $senhaCrip);
             $result = $stmt->execute();
 
             return $result;
-        } else {
-            return false;
         }
     }
 
-    private function verificarNomeexistente($nome)
+    public function verificarExistente($nome, $email)
     {
-        $sql = "SELECT COUNT(*) FROM cliente WHERE nome = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $nome);
+        $query = "SELECT COUNT(*) FROM usuarios WHERE nome = ? and email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $nome);
+        $stmt->bindValue(2, $email);
         $stmt->execute();
-        return $stmt->fetchColumn() > 0;
-    }
 
-    private function verificarEmailExistente($email)
-    {
-        $sql = "SELECT COUNT(*) FROM cliente WHERE email = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
 
@@ -72,6 +62,22 @@ class Cliente
                 return true;
             }
         }
+        return false;
+    }
+
+    public function verificarAdm($login)
+    {
+        $query = "SELECT adm FROM cliente WHERE  email = :email OR nome = :nome ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':email', $login);
+        $stmt->bindValue(':nome', $login);
+        
+
+        if ($stmt->rowCount() == 1) {
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $usuario['adm'] == 1;
+        }
+
         return false;
     }
 }
