@@ -12,7 +12,7 @@ class Cliente
         $this->conn = $db;
     }
 
-    public function cadastrar($nome, $email, $senha,$confSenha)
+    public function cadastrar($nome, $email, $senha,$confSenha,$telefone,$apelido)
     {
 
         if ($senha === $confSenha) {
@@ -26,12 +26,14 @@ class Cliente
 
             $senhaCrip = password_hash($senha, PASSWORD_DEFAULT);
 
-            $query = "INSERT  cliente (nome,email,senha) VALUES (?,?,?)";
+            $query = "INSERT  cliente (nome,email,senha,apelido,telefone) VALUES (?,?,?,?,?)";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(1, $nome);
             $stmt->bindValue(2, $email);
             $stmt->bindValue(3, $senhaCrip);
+            $stmt->bindValue(4, $apelido);
+            $stmt->bindValue(5, $telefone);
             $result = $stmt->execute();
 
             return $result;
@@ -40,7 +42,7 @@ class Cliente
 
     public function verificarExistente($nome, $email)
     {
-        $query = "SELECT COUNT(*) FROM usuarios WHERE nome = ? and email = ?";
+        $query = "SELECT COUNT(*) FROM cliente WHERE nome = ? and email = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(1, $nome);
         $stmt->bindValue(2, $email);
@@ -80,4 +82,5 @@ class Cliente
 
         return false;
     }
+    
 }

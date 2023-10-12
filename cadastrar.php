@@ -15,7 +15,7 @@ if (isset($_POST['cadastrar'])) {
     $senha = $_POST['senha'];
     $confSenha = $_POST['confSenha'];
 
-    if ($classUsuario->cadastrar($nome, $apelido, $email, $telefone, $senha, $confSenha)) {
+    if ($classUsuario->cadastrar($nome,  $email,  $senha, $confSenha, $telefone, $apelido)) {
         print "<script> alert('Cadastro efetuado com sucesso!')</script>";
     } else {
         print "<script> alert('Erro ao Cadastrar')</script>";
@@ -55,28 +55,28 @@ if (isset($_POST['cadastrar'])) {
                                 <label for="nome" class="form-label">Nome de Usuário</label>
                                 <input type="text" class="form-control" name="nome" id="nome" required>
                             </div>
-                                <div class="mb-3">
-                                    <label for="apelido" class="form-label">Apelido do usuario</label>
-                                    <input type="text" class="form-control" name="apelido" id="apelido" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">E-mail</label>
-                                    <input type="email" class="form-control" name="email" id="email">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="telefone" class="form-label">telefone</label>
-                                    <input type="tel" class="form-control" name="telefone" id="telefone" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="senha" class="form-label">Senha</label>
-                                    <input type="password" class="form-control" name="senha" id="senha" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confSenha" class="form-label">Confirmar Senha</label>
-                                    <input type="password" class="form-control" name="confSenha" id="confSenha" required>
-                                </div>
-                                <button type="submit" name="cadastrar" class="btn btn-primary btn-block">Criar Conta</button>
-                            </form>
+                            <div class="mb-3">
+                                <label for="apelido" class="form-label">Apelido do ususario</label>
+                                <input type="text" class="form-control" name="apelido" id="apelido" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" name="email" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefone" class="form-label">Telefone do Usuário</label>
+                                <input type="text" class="form-control" name="telefone" id="telefone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" class="form-control" name="senha" id="senha" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confSenha" class="form-label">Confirmar Senha</label>
+                                <input type="password" class="form-control" name="confSenha" id="confSenha" required>
+                            </div>
+                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block">Criar Conta</button>
+                        </form>
                     </div>
                 </div>
             </div>

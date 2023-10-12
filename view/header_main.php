@@ -17,10 +17,10 @@
                             <i class="fas fa-shopping-cart"></i> Carrinho
                         </a>
                     </li>
-                    <?php if (isset($_SESSION['apelido'])): ?>
+                    <?php if (isset($_SESSION['nome'])): ?>
                         <!-- Se o usuário estiver logado, mostre seu nome e um botão de logout -->
                         <li class="nav-item">
-                            <span class="nav-link">Bem-vindo, <?php echo $_SESSION['apelido']; ?>!</span>
+                            <span class="nav-link">Bem-vindo, <?php echo $_SESSION['nome']; ?>!</span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">
@@ -35,7 +35,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cadastro.php">
+                            <a class="nav-link" href="cadastrar.php">
                                 <i class="fas fa-user"></i> Cadastrar
                             </a>
                         </li>

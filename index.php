@@ -22,7 +22,9 @@ if ($result->rowCount() > 0) {
 
 $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
 
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt_BR">
@@ -38,6 +40,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/1a56e06420.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <style>
         .product-card {
@@ -82,6 +85,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
             font-size: 18px;
             padding: 0;
         }
+
         .add-to-cart-button {
             margin-top: 10px;
 
@@ -93,6 +97,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
         }
     </style>
 </head>
+
 <body>
     <?php include_once('view/header_main.php'); ?>
 
@@ -108,7 +113,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
                             <p class="card-text"><?= $value["descri"] ?></p>
                             <p class="produto-preco">Preço: R$ <?php echo number_format($value['preco_produto'], 2, ',', '.'); ?></p>
                             <input type="hidden" name="produto_id" value="<?= $value["id_produto"] ?>">
-                            <a href="visualizar_produto.php?id_produto=<?= $value["id_produto"] ?>" class="btn_visu btn btn-primary">Visualizar Produto</a>
+                            <a href="visualizar.php?id_produto=<?= $value["id_produto"] ?>" class="btn_visu btn btn-primary">Visualizar Produto</a>
                         </div>
                     </div>
                 </div>
@@ -116,29 +121,28 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
         </div>
     </div>
     <?php
-    if (isset($produtos[$id_produto])) {
-        $carrinho = new carrinho($id_produto, $produtos[$id_produto]['nome_produto'], $produtos[$id_produto]['descri'], $produtos[$id_produto]['preco_produto'], $produtos[$id_produto]['img_produto']);
-    } else {
-        echo "O produto com o id: $id_produto não existe.";
+    if ($id_produto !== "" && isset($produtos[$id_produto])) {
+        $carrinho = new Carrinho($id_produto, $produtos[$id_produto]['nome_produto'], $produtos[$id_produto]['descri'], $produtos[$id_produto]['preco_produto'], $produtos[$id_produto]['img_produto']);
+        $carrinho->getCarrinho();
     }
-    if (isset($_SESSION['carrinho'])) {
+    if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
         foreach ($_SESSION['carrinho'] as $produto => $value) {
-            if (isset($value['id_produto'], $value['nome_produto'], $value['descri'], $value['preco_produto'], $value['img_produto'])) {
-                echo "<p> Id do produto: " . $value['id_produto'] . " | 
-                                Nome do Produto: " . $value['nome_produto'] . " | 
-                                Descrição: " . $value['descri'] . " |
-                                Preço: " . $value['preco_produto'] . "| 
-                                Foto do Produto: " . $value['img_produto'] .
-                    "</p><br>";
-                echo "<a href='javascript:void(0);' class='excluir-produto' data-id='{$produto}'>Excluir</a>";
-            } else {
-                echo "Algumas chaves não existem para o produto: $produto";
-            }
+            echo "<p> Id do produto: " . $value['id_produto'] . " | 
+                            Nome do Produto: " . $value['nome_produto'] . " | 
+                            Descrição: " . $value['descri'] . " |
+                            Preço: " . $value['preco_produto'] . "| 
+                             Foto do Produto: " . $value['img_produto'] .
+                "</p><br>";
+            echo "<a href='javascript:void(0);' class='excluir-produto' data-id='{$produto}'>Excluir</a>";
         }
     } else {
-        echo "Carrinho de compras está vazio.";
+        $_SESSION['carrinho'] = array();
+        echo "";
     }
     ?>
+
+
+
 
     <script>
         $(document).ready(function() {
@@ -146,7 +150,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
                 var idProduto = $(this).data("id");
 
                 $.ajax({
-                    url: "excluir_produto.php", // Onde "excluir_produto.php" é o script PHP para processar a exclusão
+                    url: "excluir.php", // Onde "excluir_produto.php" é o script PHP para processar a exclusão
                     type: "POST",
                     data: {
                         id_produto: idProduto
@@ -164,6 +168,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
             });
         });
     </script>
+
 
 </body>
 

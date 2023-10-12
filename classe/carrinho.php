@@ -22,9 +22,9 @@
              $_SESSION['carrinho'][$this->id_produto] = [
                 'id_produto' => "{$this->id_produto}",
                 'nome_produto' => "{$this->nome_produto}",
-                'descricao' => "{$this->descri}",
-                'preco' => "{$this->preco_produto}",
-                'foto_produto' => "{$this->img_produto}"
+                'descri' => "{$this->descri}",
+                'preco_produto' => "{$this->preco_produto}",
+                'img_produto' => "{$this->img_produto}"
             ];
 
             // print_r($_SESSION);
