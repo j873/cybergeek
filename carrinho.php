@@ -112,7 +112,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
 
         <?php
         if ($id_produto !== "" && isset($produtos[$id_produto])) {
-            $carrinho = new Carrinho(   
+            $carrinho = new Carrinho(
                 $id_produto,
                 $produtos[$id_produto]['nome_produto'],
                 $produtos[$id_produto]['descri'],
@@ -138,6 +138,18 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
                 </div>
 
         <?php
+            }
+            if (!empty($_SESSION['carrinho'])) {
+                $precoTotal = 0;
+
+                foreach ($_SESSION['carrinho'] as $produto => $value) {
+                    $precoTotal += $value['preco_produto'];
+                }
+
+
+                echo '<div class="product-card">';
+                echo '   <div class="product-price">Preço Total: R$ ' . number_format($precoTotal, 2, ',', '.') . '</div>';
+                echo '</div>';
             }
         } else {
             echo '<div class="empty-cart-message">Seu carrinho está vazio.</div>';
