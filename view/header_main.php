@@ -9,7 +9,7 @@
                     <li class="nav-item">
                         <form class="form-inline">
                             <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" class="pesquisar">Pesquisar</button>
                         </form>
                     </li>
                     <li class="nav-item">
@@ -17,10 +17,10 @@
                             <i class="fas fa-shopping-cart"></i> Carrinho
                         </a>
                     </li>
-                    <?php if (isset($_SESSION['nome'])): ?>
-                        <!-- Se o usuário estiver logado, mostre seu nome e um botão de logout -->
+                    <?php if (isset($_SESSION['apelido'])): ?>
+                        
                         <li class="nav-item">
-                            <span class="nav-link">Bem-vindo, <?php echo $_SESSION['nome']; ?>!</span>
+                            <span class="nav-link">Bem-vindo, <?php echo $_SESSION['apelido']; ?>!</span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">
@@ -28,7 +28,7 @@
                             </a>
                         </li>
                     <?php else: ?>
-                        <!-- Se o usuário não estiver logado, mostre os botões de login e registro -->
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="login.php">
                                 <i class="fas fa-user"></i> Logar

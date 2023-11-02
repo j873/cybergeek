@@ -30,7 +30,7 @@ class CrudProduto
         if (isset($_FILES['img_produto'])) {
             $arquivo = $_FILES['img_produto'];
             $extensao = pathinfo($arquivo['name'], PATHINFO_EXTENSION);
-            $ex_permitidos = array('jpg', 'jpeg', 'png', 'gif','webp');
+            $ex_permitidos = array('jpg', 'jpeg', 'png', 'gif', 'webp');
 
             if (in_array(strtolower($extensao), $ex_permitidos)) {
                 $caminho_arquivo = 'img/' . $arquivo['name'];
@@ -68,6 +68,15 @@ class CrudProduto
     {
         $query = "SELECT * FROM produto_compras";
         $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function pesquisar ($searchTerm)
+    {
+        $query = "SELECT * FROM 	produto_compras WHERE nome_produto LIKE :search OR tipo LIKE :search";
+        $stmt = $this->conn->prepare($query);
+        $searchTerm = "%" . $searchTerm . "%";
+        $stmt->bindParam(":search", $searchTerm, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt;
     }

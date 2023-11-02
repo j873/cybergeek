@@ -1,13 +1,16 @@
 <?php
 session_start();
 
+
 require_once('classe/classe.php');
 require_once('conexao/conexao.php');
 require_once('classe/carrinho.php');
 
+
 $database = new Conection();
 $db = $database->getConnection();
 $classUsuario = new Cliente($db);
+
 
 $produtos = [];
 
@@ -21,6 +24,7 @@ if ($result->rowCount() > 0) {
 }
 
 $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
+
 
 
 ?>

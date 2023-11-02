@@ -110,6 +110,12 @@ if (isset($_GET['id_produto'])) {
                 limpa_formulário_cep();
             }
         };
+        document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("buscar-cep").addEventListener("click", function() {
+            var cep = document.getElementById('cep').value;
+            pesquisacep(cep);
+        });
+    });
     </script>
     <style>
         body {
@@ -253,7 +259,7 @@ if (isset($_GET['id_produto'])) {
                 <p class="produto-preco">Preço: R$ <?php echo number_format($produto['preco_produto'], 2, ',', '.'); ?></p>
             </div>
 
-            <!-- Campo para buscar CEP -->
+
             <form method="get" action=".">
                 <label>Cep:
                     <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" /></label><br />
@@ -267,13 +273,13 @@ if (isset($_GET['id_produto'])) {
                     <input name="uf" type="text" id="uf" size="2" />
                 </label><br />
             </form>
-            <button class="acao-button buscar-button" type="button">Buscar</button>
+            <button class="acao-button buscar-button" type="button" id="buscar-cep">Buscar</button>
         </div>
 
 
 
         <!-- Botão de comprar -->
-        <a href="#" class="acao-button comprar-button">Comprar</a>
+        <a href="Compra.php" class="acao-button comprar-button">Comprar</a>
 
         <!-- Botão de adicionar ao carrinho -->
         <a href="#" class="acao-button carrinho-button">Adicionar ao Carrinho</a>

@@ -56,7 +56,7 @@ if (isset($_POST['cadastrar'])) {
                                 <input type="text" class="form-control" name="nome" id="nome" required>
                             </div>
                             <div class="mb-3">
-                                <label for="apelido" class="form-label">Apelido do ususario</label>
+                                <label for="apelido" class="form-label">Apelido do usuario</label>
                                 <input type="text" class="form-control" name="apelido" id="apelido" required>
                             </div>
                             <div class="mb-3">
@@ -69,13 +69,13 @@ if (isset($_POST['cadastrar'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="senha" class="form-label">Senha</label>
-                                <input type="password" class="form-control" name="senha" id="senha" required>
+                                <input type="password" class="form-control" name="senha" id="senha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required>
                             </div>
                             <div class="mb-3">
                                 <label for="confSenha" class="form-label">Confirmar Senha</label>
-                                <input type="password" class="form-control" name="confSenha" id="confSenha" required>
+                                <input type="password" class="form-control" name="confSenha" id="confSenha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required>
                             </div>
-                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block">Criar Conta</button>
+                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block" id="botao" onclick="redi()">Criar Conta</button>
                         </form>
                     </div>
                 </div>

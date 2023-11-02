@@ -12,7 +12,7 @@ class Cliente
         $this->conn = $db;
     }
 
-    public function cadastrar($nome, $email, $senha,$confSenha,$telefone,$apelido)
+    public function cadastrar($nome, $email, $senha, $confSenha, $telefone, $apelido)
     {
 
         if ($senha === $confSenha) {
@@ -69,11 +69,11 @@ class Cliente
 
     public function verificarAdm($login)
     {
-        $query = "SELECT adm FROM cliente WHERE  email = :email OR nome = :nome ";
+        $query = "SELECT adm FROM cliente WHERE  email = :email OR apelido = :apelido ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':email', $login);
-        $stmt->bindValue(':nome', $login);
-        
+        $stmt->bindValue(':apelido', $login);
+
 
         if ($stmt->rowCount() == 1) {
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
