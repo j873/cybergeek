@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once('classe/classe.php');
+require_once('classe/usuario.php');
 require_once('conexao/conexao.php');
 
 $database = new Conection();
 $db = $database->getConnection();
-$classUsuario = new Cliente($db);
+$classUsuario = new Usuario($db);
 
 if (isset($_POST['logar'])) {
     $login = $_POST['login'];
@@ -65,15 +65,19 @@ if (isset($_POST['logar'])) {
                                 <input type="password" class="form-control" name="senha" id="senha" required >
                             </div>
                             <button type="submit" name="logar" class="btn btn-primary btn-block">Logar</button>
+                            <button  onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
+    <script>
+        function redirecionarParaLogin() {
+            // Redireciona para a página de login
+            window.location.href = "cadastrar.php";
+        }
+    </script>
 </body>
 
 </html>

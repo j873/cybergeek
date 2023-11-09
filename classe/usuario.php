@@ -3,7 +3,7 @@ include_once('conexao/conexao.php');
 
 $db = new Conection();
 
-class Cliente
+class Usuario
 {
     private $conn;
 
@@ -26,7 +26,7 @@ class Cliente
 
             $senhaCrip = password_hash($senha, PASSWORD_DEFAULT);
 
-            $query = "INSERT  cliente (nome,email,senha,apelido,telefone) VALUES (?,?,?,?,?)";
+            $query = "INSERT  usuario (nome,email,senha,apelido,telefone) VALUES (?,?,?,?,?)";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(1, $nome);
@@ -42,7 +42,7 @@ class Cliente
 
     public function verificarExistente($nome, $email)
     {
-        $query = "SELECT COUNT(*) FROM cliente WHERE nome = ? and email = ?";
+        $query = "SELECT COUNT(*) FROM usuario WHERE nome = ? and email = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(1, $nome);
         $stmt->bindValue(2, $email);
@@ -53,7 +53,7 @@ class Cliente
 
     public function logar($email, $senha)
     {
-        $sql = "SELECT * FROM cliente WHERE email = :email";
+        $sql = "SELECT * FROM usuario WHERE email = :email";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
@@ -69,7 +69,7 @@ class Cliente
 
     public function verificarAdm($login)
     {
-        $query = "SELECT adm FROM cliente WHERE  email = :email OR apelido = :apelido ";
+        $query = "SELECT adm FROM usuario WHERE  email = :email OR apelido = :apelido ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':email', $login);
         $stmt->bindValue(':apelido', $login);

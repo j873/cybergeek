@@ -6,11 +6,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-shopping-cart"></i> Carrinho
-                    </a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">
                         <i class="fas fa-user"></i> Logar

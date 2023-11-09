@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once('classe/classe.php');
+require_once('classe/usuario.php'); 
 require_once('conexao/conexao.php');
 require_once('classe/carrinho.php');
 $database = new Conection();
 $db = $database->getConnection();
-$classUsuario = new Cliente($db);
+$classUsuario = new Usuario($db);
 $produtos = [];
 $query = "SELECT * FROM produto_compras ";
 $result = $db->query($query);
@@ -112,7 +112,7 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
             foreach ($_SESSION['carrinho'] as $produto => $value) {
         ?>
                 <div class="product-card">
-                    <img src="img/funko_midoriya.webp" alt="Imagem do Produto">
+                    <img src="<?= $value['img_produto'] ?>" alt="Imagem do Produto">
                     <div class="product-details">
                         <div class="product-title"><?= $value['nome_produto'] ?></div>
                         <div class="product-description"><?= $value['descri'] ?></div>

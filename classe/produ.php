@@ -71,13 +71,4 @@ class CrudProduto
         $stmt->execute();
         return $stmt;
     }
-    public function pesquisar ($searchTerm)
-    {
-        $query = "SELECT * FROM 	produto_compras WHERE nome_produto LIKE :search OR tipo LIKE :search";
-        $stmt = $this->conn->prepare($query);
-        $searchTerm = "%" . $searchTerm . "%";
-        $stmt->bindParam(":search", $searchTerm, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt;
-    }
 }

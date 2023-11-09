@@ -1,15 +1,14 @@
 <?php
 session_start();
 
-
-require_once('classe/classe.php');
+require_once('classe/usuario.php');
 require_once('conexao/conexao.php');
 require_once('classe/carrinho.php');
 
 
 $database = new Conection();
 $db = $database->getConnection();
-$classUsuario = new Cliente($db);
+$classUsuario = new Usuario($db);
 
 
 $produtos = [];
@@ -128,26 +127,24 @@ $id_produto = isset($_GET['id_produto']) ? $_GET['id_produto'] : "";
     if ($id_produto !== "" && isset($produtos[$id_produto])) {
         $carrinho = new Carrinho($id_produto, $produtos[$id_produto]['nome_produto'], $produtos[$id_produto]['descri'], $produtos[$id_produto]['preco_produto'], $produtos[$id_produto]['img_produto']);
         $carrinho->getCarrinho();
-    }
-    if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
-        foreach ($_SESSION['carrinho'] as $produto => $value) {
-            echo "<p> Id do produto: " . $value['id_produto'] . " | 
+
+
+        if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
+            foreach ($_SESSION['carrinho'] as $produto => $value) {
+                echo "<p> Id do produto: " . $value['id_produto'] . " | 
                             Nome do Produto: " . $value['nome_produto'] . " | 
                             Descrição: " . $value['descri'] . " |
                             Preço: " . $value['preco_produto'] . "| 
                              Foto do Produto: " . $value['img_produto'] .
-                "</p><br>";
-            echo "<a href='javascript:void(0);' class='excluir-produto' data-id='{$produto}'>Excluir</a>";
+                    "</p><br>";
+                echo "<a href='javascript:void(0);' class='excluir-produto' data-id='{$produto}'>Excluir</a>";
+            }
+        } else {
+            $_SESSION['carrinho'] = array();
+            echo "";
         }
-    } else {
-        $_SESSION['carrinho'] = array();
-        echo "";
     }
     ?>
-
-
-
-
     <script>
         $(document).ready(function() {
             $(".excluir-produto").click(function() {

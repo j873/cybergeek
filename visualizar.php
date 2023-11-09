@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once('classe/classe.php');
+require_once('classe/usuario.php');
 require_once('conexao/conexao.php');
 
 $database = new Conection();
 $db = $database->getConnection();
-$classUsuario = new Cliente($db);
+$classUsuario = new Usuario($db);
 
 $produto = null;
 
@@ -42,81 +42,6 @@ if (isset($_GET['id_produto'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value = ("");
-            document.getElementById('bairro').value = ("");
-            document.getElementById('cidade').value = ("");
-            document.getElementById('uf').value = ("");
-
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value = (conteudo.logradouro);
-                document.getElementById('bairro').value = (conteudo.bairro);
-                document.getElementById('cidade').value = (conteudo.localidade);
-                document.getElementById('uf').value = (conteudo.uf);
-
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep();
-                alert("CEP não encontrado.");
-            }
-        }
-
-        function pesquisacep(valor) {
-
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
-
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value = "...";
-                    document.getElementById('bairro').value = "...";
-                    document.getElementById('cidade').value = "...";
-                    document.getElementById('uf').value = "...";
-
-
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-
-                    //Sincroniza com o callback.
-                    script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
-
-                } //end if.
-                else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        };
-        document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("buscar-cep").addEventListener("click", function() {
-            var cep = document.getElementById('cep').value;
-            pesquisacep(cep);
-        });
-    });
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -258,44 +183,28 @@ if (isset($_GET['id_produto'])) {
                 <p class="produto-descricao"><?php echo $produto['descri']; ?></p>
                 <p class="produto-preco">Preço: R$ <?php echo number_format($produto['preco_produto'], 2, ',', '.'); ?></p>
             </div>
+            <!-- Botão de comprar -->
+            <a href="Compra.php" class="acao-button comprar-button">Comprar</a>
 
+            <!-- Botão de adicionar ao carrinho -->
+            <a href="#" class="acao-button carrinho-button">Adicionar ao Carrinho</a>
 
-            <form method="get" action=".">
-                <label>Cep:
-                    <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" /></label><br />
-                <label>Rua:
-                    <input name="rua" type="text" id="rua" size="60" /></label><br />
-                <label>Bairro:
-                    <input name="bairro" type="text" id="bairro" size="40" /></label><br />
-                <label>Cidade:
-                    <input name="cidade" type="text" id="cidade" size="40" /></label><br />
-                <label>Estado:
-                    <input name="uf" type="text" id="uf" size="2" />
-                </label><br />
-            </form>
-            <button class="acao-button buscar-button" type="button" id="buscar-cep">Buscar</button>
+            <!-- Campo para colocar comentários -->
+            <textarea class="comentarios-input" placeholder="Deixe seu comentário"></textarea>
+
+            <!-- Botão para voltar à página principal -->
+            <a href="index.php" class="voltar-button">Voltar</a>
         </div>
-
-
-
-        <!-- Botão de comprar -->
-        <a href="Compra.php" class="acao-button comprar-button">Comprar</a>
-
-        <!-- Botão de adicionar ao carrinho -->
-        <a href="#" class="acao-button carrinho-button">Adicionar ao Carrinho</a>
-
-        <!-- Campo para colocar comentários -->
-        <textarea class="comentarios-input" placeholder="Deixe seu comentário"></textarea>
-
-        <!-- Botão para voltar à página principal -->
-        <a href="index.php" class="voltar-button">Voltar</a>
-    </div>
     </div>
 
 
 
-
-
+    <script>
+        function redirecionarParaLogin() {
+            // Redireciona para a página de login
+            window.location.href = "login.php";
+        }
+    </script>
 </body>
 
 </html>

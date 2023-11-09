@@ -1,11 +1,10 @@
 <?php
-require_once('classe/classe.php');
+require_once('classe/usuario.php');
 require_once('conexao/conexao.php');
 
 $database = new Conection();
 $db = $database->getConnection();
-$classUsuario = new Cliente($db);
-
+$classUsuario = new Usuario($db);
 
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
@@ -16,13 +15,12 @@ if (isset($_POST['cadastrar'])) {
     $confSenha = $_POST['confSenha'];
 
     if ($classUsuario->cadastrar($nome,  $email,  $senha, $confSenha, $telefone, $apelido)) {
-        print "<script> alert('Cadastro efetuado com sucesso!')</script>";
+        header("Location: login.php");
+        exit;
     } else {
         print "<script> alert('Erro ao Cadastrar')</script>";
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -52,12 +50,14 @@ if (isset($_POST['cadastrar'])) {
                         <h2 class="card-title text-center">Criar Conta</h2>
                         <form action="" method="POST">
                             <div class="mb-3">
-                                <label for="nome" class="form-label">Nome de Usuário</label>
+                                <label for="nome" class="form-label">Nome do Usuário</label>
                                 <input type="text" class="form-control" name="nome" id="nome" required>
                             </div>
                             <div class="mb-3">
+
                                 <label for="apelido" class="form-label">Apelido do usuario</label>
                                 <input type="text" class="form-control" name="apelido" id="apelido" required>
+
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">E-mail</label>
@@ -75,7 +75,10 @@ if (isset($_POST['cadastrar'])) {
                                 <label for="confSenha" class="form-label">Confirmar Senha</label>
                                 <input type="password" class="form-control" name="confSenha" id="confSenha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required>
                             </div>
-                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block" id="botao" onclick="redi()">Criar Conta</button>
+                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block" id="botao" >Criar Conta</button>
+                            <button  onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
+
+
                         </form>
                     </div>
                 </div>
@@ -83,7 +86,12 @@ if (isset($_POST['cadastrar'])) {
         </div>
     </div>
 
-
+    <script>
+        function redirecionarParaLogin() {
+            // Redireciona para a página de login
+            window.location.href = "login.php";
+        }
+    </script>
 </body>
 
 </html>
