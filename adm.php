@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['nome'])) {
-    header("Location: ../index.php");
+    header("Location: .../index.php");
     exit();
 }
 
@@ -15,23 +15,21 @@ $database = new Conection();
 $db = $database->getConnection();
 $crud = new CrudProduto($db);
 
-// Solicitações do usuário
-if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-        case 'create':
-            $crud->create($_POST);
-            $rows = $crud->read(); // atualiza a variável $rows após a criação de um novo registro
-            break;
-        case 'read':
-            $rows = $crud->read();
-            break;
-        default:
-            $rows = $crud->read();
-            break;
+// Verifica se uma requisição de remoção foi feita
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_produto'])) {
+    $idProduto = $_POST['id_produto'];
+    $remocaoSucesso = $crud->delete($idProduto);
+
+    // Exibe mensagem de sucesso ou erro após a remoção
+    if ($remocaoSucesso) {
+        $mensagemRemocao = "Produto removido com sucesso!";
+    } else {
+        $mensagemRemocao = "Erro ao remover o produto. Verifique se o produto existe.";
     }
-} else {
-    $rows = $crud->read();
 }
+
+// Lê os produtos após a remoção (ou normalmente)
+$rows = $crud->read();
 ?>
 
 <!DOCTYPE html>
@@ -41,14 +39,11 @@ if (isset($_GET['action'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard ADM</title>
-	<link rel="stylesheet" >
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="adm">
     <div class="container mt-5">
         <h1 class="text-center">Painel de Controle do ADM</h1>
         <p class="text-center">Seja bem-vindo, <?php echo $login; ?></p>
@@ -66,6 +61,7 @@ if (isset($_GET['action'])) {
                     <option value="action figure">Action figure</option>
                     <option value="decoração">decoração</option>
                     <option value="Funko Pop">Funko Pop</option>
+                    <option value="cosplay">Cosplay</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -76,7 +72,7 @@ if (isset($_GET['action'])) {
                 <label for="descri" class="form-label">Descrição</label>
                 <input type="text" name="descri" class="form-control" required>
             </div>
-			<div class="mb-3">
+            <div class="mb-3">
                 <label for="preco_produto" class="form-label">Preço do Produto</label>
                 <input type="number" name="preco_produto" class="form-control" required>
             </div>
@@ -112,10 +108,19 @@ if (isset($_GET['action'])) {
                         echo "<td>" . $row['descri'] . "</td>";
                         echo "<td>" . $row['img_produto'] . "</td>";
                         echo "<td>" . $row['preco_produto'] . "</td>";
+
+                        // Botão de Remover
+                        echo "<td>
+                                <form method='post'>
+                                    <input type='hidden' name='id_produto' value='" . $row['id_produto'] . "'>
+                                    <button type='submit' class='btn btn-danger btn-sm'>Remover</button>
+                                </form>
+                            </td>";
+
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='6'>Não há registros a serem exibidos.</td></tr>";
+                    echo "<tr><td colspan='7'>Não há registros a serem exibidos.</td></tr>";
                 }
                 ?>
             </tbody>
@@ -125,9 +130,13 @@ if (isset($_GET['action'])) {
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 
-	<footer class="footer">
-        <?php include_once('view/footer.php'); ?>
-	</footer>
+    <body>
+        <footer class="bg-dark text-light text-center py-3">
+            <div class="container">
+                <p>&copy; <?php echo date("Y"); ?> Seu E-commerce. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </body>
 </body>
 
 </html>

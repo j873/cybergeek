@@ -10,7 +10,6 @@ $classUsuario = new Usuario($db);
 
 $produto = null;
 
-
 // Verifica se um ID de produto foi passado via GET
 if (isset($_GET['id_produto'])) {
     $id_produto = $_GET['id_produto'];
@@ -29,7 +28,11 @@ if (isset($_GET['id_produto'])) {
     }
 }
 
-
+// Redireciona para a página de login se o usuário não estiver logado
+if (!isset($_SESSION['nome'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,142 +42,16 @@ if (isset($_GET['id_produto'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Produto</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 32px;
-            margin: 0;
-            padding: 20px 0;
-            color: #333;
-        }
-
-        .produto-info {
-            text-align: left;
-            padding: 20px;
-            border-top: 1px solid #ddd;
-        }
-
-        .produto-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .produto-titulo {
-            font-size: 24px;
-            margin: 10px 0;
-            color: #333;
-        }
-
-        .produto-descricao {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #555;
-        }
-
-        .produto-preco {
-            font-size: 24px;
-            color: #e44d26;
-        }
-
-        /* Estilos para o campo de busca de CEP */
-        .cep-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        /* Estilos para os botões */
-        .acao-button {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .comprar-button,
-        .buscar-button {
-            background-color: #e44d26;
-            margin: 20px
-        }
-
-        .carrinho-button {
-            background-color: #333;
-        }
-
-        .comprar-button:hover,
-        .carrinho-button:hover {
-            background-color: #333;
-        }
-
-        /* Estilos para o campo de comentários */
-        .comentarios-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        /* Estilos para o botão Voltar */
-        .voltar-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #333;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .voltar-button:hover {
-            background-color: #555;
-        }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
 
     <?php require('view/header_main.php'); ?>
 
-
-    <div class="container">
-        <h1>Detalhes do Produto</h1>
+    <div class="container mt-3">
+        <h1 class="mb-4">Detalhes do Produto</h1>
 
         <div class="produto-info">
             <img src="<?php echo $produto['img_produto']; ?>" alt="<?php echo $produto['nome_produto']; ?>" class="produto-img">
@@ -183,26 +60,53 @@ if (isset($_GET['id_produto'])) {
                 <p class="produto-descricao"><?php echo $produto['descri']; ?></p>
                 <p class="produto-preco">Preço: R$ <?php echo number_format($produto['preco_produto'], 2, ',', '.'); ?></p>
             </div>
-            <!-- Botão de comprar -->
-            <a href="Compra.php" class="acao-button comprar-button">Comprar</a>
 
-            <!-- Botão de adicionar ao carrinho -->
-            <a href="#" class="acao-button carrinho-button">Adicionar ao Carrinho</a>
+            <!-- Botões -->
+            <div class="mt-4">
+                <!-- Botão de comprar -->
+                <a href="Compra.php" class="btn btn-primary mr-2">Comprar</a>
+
+                <!-- Botão de adicionar ao carrinho -->
+                <button class="btn btn-success mr-2" onclick="adicionarAoCarrinho(<?php echo $produto['id_produto']; ?>)">Adicionar ao Carrinho</button>
+
+                <!-- Botão para voltar à página principal -->
+                <a href="index.php" class="btn btn-secondary">Voltar</a>
+            </div>
 
             <!-- Campo para colocar comentários -->
-            <textarea class="comentarios-input" placeholder="Deixe seu comentário"></textarea>
-
-            <!-- Botão para voltar à página principal -->
-            <a href="index.php" class="voltar-button">Voltar</a>
+            <textarea class="form-control mt-4" placeholder="Deixe seu comentário"></textarea>
         </div>
     </div>
 
+    <!-- Inclua os arquivos JavaScript do Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1f1fV8oX8HqAqDdELkOZO+Y9Adn6/i+L2y8E=" crossorigin="anonymous"></script>
 
 
     <script>
-        function redirecionarParaLogin() {
-            // Redireciona para a página de login
-            window.location.href = "login.php";
+        function adicionarAoCarrinho(idProduto) {
+            // Envia uma solicitação AJAX para adicionar o produto ao carrinho
+            $.ajax({
+                url: 'adicionar_carrinho.php',
+                method: 'POST',
+                data: {
+                    id_produto: idProduto
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Exibe a resposta no console (você pode personalizar isso conforme necessário)
+                    console.log(response);
+
+                    // Aqui, você pode adicionar lógica para exibir mensagens ao usuário, se desejar
+                    alert(response.message);
+                },
+                error: function(error) {
+                    // Trata erros na solicitação AJAX (você pode personalizar isso conforme necessário)
+                    console.error('Erro na solicitação AJAX:', error);
+                }
+            });
         }
     </script>
 </body>

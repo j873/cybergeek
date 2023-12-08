@@ -66,6 +66,16 @@ class Usuario
         }
         return false;
     }
+    public function obterInformacoesUsuario($login)
+    {
+        $query = "SELECT nome, apelido FROM usuario WHERE email = :email OR nome = :nome";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':email', $login);
+        $stmt->bindValue(':nome', $login);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public function verificarAdm($login)
     {

@@ -1,0 +1,389 @@
+/* Reset de margens e paddings */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo do header */
+header {
+    background-color: #1a1a1a; /* Azul escuro */
+    color: #ffffff; /* Texto branco */
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilo do logotipo */
+#cart-button img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilo da barra de navegação */
+.navbar {
+    background-color: #1a1a1a; 
+    margin-top: -15px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff; 
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-color: #ffffff; 
+}
+
+/* Estilo do formulário de pesquisa */
+.form-inline input {
+    background-color: #9a9faa; 
+    border: 1px solid #9a9fa3; 
+    color: #495057; 
+    margin-top: 20px;
+}
+
+.form-inline button {
+    background-color: #007bff; /* Azul */
+    border: 1px solid #007bff;
+    color: #ffffff; 
+}
+
+/* Estilo do ícone do carrinho */
+#cart-button img {
+    width: 40px; 
+}
+
+/* Estilo para a área de boas-vindas e sair */
+.top-right {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.top-right span {
+    color: #ffffff; 
+    margin-right: 10px;
+}
+
+.top-right a {
+    color: #ffffff; 
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+/* Estilo para o menu de navegação na parte superior direita */
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+/* Adicionar estilo para o botão de pesquisa no navbar */
+.navbar .form-inline .btn {
+    margin-left: 10px;
+}
+
+/* Adicionar estilo para a caixa de pesquisa no navbar */
+.navbar .form-inline .form-control {
+    margin-right: 10px;
+}
+
+/* Estilo para o ícone de usuário no navbar */
+.navbar .fas {
+    margin-right: 5px;
+}
+
+ /* Estilo para o corpo da página */
+body {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para o contêiner principal da página */
+.container {
+    margin-top: 20px;
+}
+
+/* Estilo para o título da página */
+h1 {
+    color: #007bff;
+    
+}
+
+/* Estilo para a seção de produtos */
+.product-card {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #c9cfd3;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+/* Estilo para a imagem do produto */
+.img-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Estilo para o título do produto */
+.card-body h2 {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Estilo para o texto do produto */
+.card-body p {
+    font-size: 0.9em;
+}
+
+/* Estilo para o preço do produto */
+.produto-preco {
+    font-weight: bold;
+    color: #28a745;
+    margin-top: 10px;
+}
+
+
+/* Estilo para o formulário de login */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; 
+    color: #495057; 
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #f8f9fa;
+    border-radius: 8px; 
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #053e7c; 
+}
+
+.form-label {
+    color: #1a1b1d; 
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #afb5b9; 
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #053e7c; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #053e7c; 
+}
+
+/* Reset de margens e paddings */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo do header */
+header {
+    background-color: #1a1a1a; /* Preto */
+    color: #ffffff; /* Texto branco */
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilo do logotipo */
+.logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilo para o botão de Logar */
+.btn-logar {
+    background-color: #007bff; /* Azul */
+    color: #fff; /* Texto branco */
+}
+
+/* Estilo para o botão de Cadastrar */
+.btn-cadastrar {
+    background-color: #28a745; /* Verde */
+    color: #fff; /* Texto branco */
+}
+
+/* Estilo do conteúdo da página */
+.container {
+    margin: 20px;
+}
+
+/* Estilo do título da página */
+h1 {
+    color: #800080; /* Roxo */
+}
+
+/* Estilo da seção de detalhes do produto */
+.produto-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center; /* Centralizar horizontalmente */
+    flex-wrap: wrap; /* Permitir que os elementos quebrem para a próxima linha quando necessário */
+}
+
+
+/* Estilo da imagem do produto */
+.produto-img {
+    max-width: 100%;
+    height: auto;
+    margin-right: 20px; /* Espaço entre a imagem e a descrição */
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+}
+
+/* Estilo do texto do produto */
+.produto-titulo {
+    color: #007bff; /* Azul */
+}
+
+.produto-descricao {
+    color: #292929; /* Preto */
+    margin-bottom: 10px;
+}
+
+.produto-preco {
+    color: #28a745; /* Verde */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Estilo dos botões de ação */
+.acao-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.comprar-button {
+    background-color: #007bff; /* Azul */
+    color: #fff; /* Texto branco */
+}
+
+.carrinho-button {
+    background-color: #28a745; /* Verde */
+    color: #fff; /* Texto branco */
+}
+
+/* Estilo para o campo de comentários */
+.comentarios-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #007bff; /* Azul */
+    border-radius: 5px;
+}
+
+/* Estilo do botão de voltar */
+.voltar-button {
+    background-color: #800080; /* Roxo */
+    color: #fff; /* Texto branco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+/* Adicione estilos para o corpo da página do ADM */
+body.adm {
+    background-color: #f0f0f0; /* Cor de fundo mais clara */
+}
+
+/* Estilo para o contêiner principal da página do ADM */
+.container-adm {
+    margin-top: 20px;
+    background-color: #fff; /* Cor de fundo branca */
+    padding: 20px; /* Adiciona algum espaçamento interno */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para o título da página do ADM */
+h1.adm-title {
+    color: #800080; /* Roxo */
+    margin-bottom: 20px; /* Adiciona espaço abaixo do título */
+}
+
+/* Estilo para os botões de ação do ADM */
+.btn-adm {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-adm-primary {
+    background-color: #800080; /* Roxo */
+    color: #fff; /* Texto branco */
+}
+
+.btn-adm-danger {
+    background-color: #dc3545; /* Vermelho */
+    color: #fff; /* Texto branco */
+}
+
+/* Estilo para a tabela do ADM */
+.table-adm {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table-adm th, .table-adm td {
+    border: 1px solid #dee2e6; /* Borda suave nas células */
+    padding: 10px;
+    text-align: left;
+}
+
+.table-adm th {
+    background-color: #f0f0f0; /* Cor de fundo mais clara para cabeçalho */
+}
+
+/* Estilo para o botão de sair no ADM */
+.btn-logout {
+    background-color: #dc3545; /* Vermelho */
+    color: #fff; /* Texto branco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    float: right; /* Move o botão para a direita */
+}
+

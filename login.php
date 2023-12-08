@@ -15,18 +15,19 @@ if (isset($_POST['logar'])) {
 
 
     if ($classUsuario->logar($login, $senha)) {
+        $infoUsuario = $classUsuario->obterInformacoesUsuario($login); // Substitua 'obterInformacoesUsuario' pelo método correto que retorna as informações do usuário
         if ($classUsuario->verificarAdm($login)) {
             $_SESSION['nome'] = $login;
             $_SESSION['adm'] = true;
             header("Location: adm.php");
             exit();
         } else {
-            $_SESSION['apelido'] = $login;
+            $_SESSION['nome'] = $infoUsuario['nome'];
+            $_SESSION['apelido'] = $infoUsuario['apelido']; // Adicione essa linha para definir o apelido na sessão
+    
             header("Location: index.php");
             exit();
         }
-    } else {
-        echo "<script>alert('Login inválido')</script>";
     }
 }
 
@@ -39,15 +40,13 @@ if (isset($_POST['logar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <?php include_once('view/header.php'); ?>
+    <?php include_once('view/header_main.php'); ?>
 
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -62,10 +61,10 @@ if (isset($_POST['logar'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="senha" class="form-label">Senha</label>
-                                <input type="password" class="form-control" name="senha" id="senha" required >
+                                <input type="password" class="form-control" name="senha" id="senha" required>
                             </div>
                             <button type="submit" name="logar" class="btn btn-primary btn-block">Logar</button>
-                            <button  onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
+                            <button onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
                         </form>
                     </div>
                 </div>

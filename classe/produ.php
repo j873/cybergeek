@@ -71,4 +71,46 @@ class CrudProduto
         $stmt->execute();
         return $stmt;
     }
+    public function search($searchTerm, $fields = ['nome_produto', 'preco_produto', 'tipo'])
+    {
+        try {
+            $conditions = [];
+            foreach ($fields as $field) {
+                $conditions[] = "$field LIKE :search";
+            }
+
+            $query = "SELECT * FROM produto_compras WHERE " . implode(" OR ", $conditions);
+
+            $stmt = $this->conn->prepare($query);
+            $searchTerm = "%" . $searchTerm . "%";
+            $stmt->bindParam(":search", $searchTerm, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Retorna os resultados em vez do statement
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Tratamento de erros (pode ser personalizado conforme necessário)
+            die("Erro na busca: " . $e->getMessage());
+        }
+    }
+    // Método para excluir um produto pelo ID
+    public function delete($idProduto)
+    {
+        try {
+            $query = "DELETE FROM produto_compras WHERE id_produto = :id_produto";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id_produto', $idProduto, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Verifica se alguma linha foi afetada (se o produto existia)
+            if ($stmt->rowCount() > 0) {
+                return true; // Exclusão bem-sucedida
+            } else {
+                return false; // Produto não encontrado
+            }
+        } catch (PDOException $e) {
+            // Exibe mensagens de erro específicas
+            die("Erro na exclusão do produto: " . $e->getMessage());
+        }
+    }
 }
