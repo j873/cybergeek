@@ -30,13 +30,14 @@ if (isset($_POST['cadastrar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar</title>
-    <link rel="stylesheet" href="index.css">  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
 
-    <?php include_once('view/header.php'); ?>
+    <?php include_once('view/header_main.php'); ?>
+
 
 
     <div class="container mt-5">
@@ -72,8 +73,8 @@ if (isset($_POST['cadastrar'])) {
                                 <label for="confSenha" class="form-label">Confirmar Senha</label>
                                 <input type="password" class="form-control" name="confSenha" id="confSenha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required>
                             </div>
-                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block" id="botao" >Criar Conta</button>
-                            <button  onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
+                            <button type="submit" name="cadastrar" class="btn btn-primary btn-block" id="botao">Criar Conta</button>
+                            <button onclick="redirecionarParaLogin()" class="btn btn-primary btn-block">Se cadastre que aqui</button>
 
 
                         </form>
